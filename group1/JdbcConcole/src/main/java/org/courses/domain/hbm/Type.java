@@ -1,6 +1,7 @@
 package org.courses.domain.hbm;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Type")
@@ -12,6 +13,9 @@ public class Type {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "type")
+    private List<Socks> socks;
 
     public int getId() {
         return id;

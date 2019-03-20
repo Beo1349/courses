@@ -1,6 +1,7 @@
 package org.courses.domain.hbm;
 
 import javax.persistence.*;
+import java.awt.*;
 
 @Entity
 @Table(name = "SocksMaterial")
@@ -14,7 +15,12 @@ public class Composition {
     private int percentage;
 
     @ManyToOne
+    @JoinColumn(name = "material")
     private Material material;
+
+    @ManyToOne
+    @JoinColumn(name = "socks")
+    private Socks socks;
 
     public int getId() {
         return id;
@@ -38,5 +44,17 @@ public class Composition {
 
     public void setMaterial(Material material) {
         this.material = material;
+    }
+
+    public Socks getSocks() {
+        return socks;
+    }
+
+    public void setSocks(Socks socks) {
+        this.socks = socks;
+    }
+
+    public String toString(){
+        return String.format(id + " " + socks.getId() + " " + material.getId() + " " + percentage);
     }
 }

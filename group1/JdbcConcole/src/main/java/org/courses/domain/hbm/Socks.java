@@ -1,11 +1,13 @@
 package org.courses.domain.hbm;
 
 import javax.persistence.*;
+import java.awt.*;
+import java.awt.color.ColorSpace;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Manufacture")
+@Table(name = "Socks")
 public class Socks {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -18,14 +20,22 @@ public class Socks {
     @Column(name = "colour")
     private int colour;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne
+    @JoinColumn(name = "manufacture")
     private Manufacture manufacture;
 
     @ManyToOne
+    @JoinColumn(name = "type")
     private Type type;
 
-    @OneToMany
-    private List<Composition> composition = new ArrayList<>();
+    @OneToMany(mappedBy = "socks")
+    private List<Composition> composition;
+
+    @OneToMany(mappedBy = "socks")
+    private List<Storage> storage;
 
     public int getId() {
         return id;
@@ -67,11 +77,41 @@ public class Socks {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String toString(){
+        return String.format(id + " " + name + " " + size + " " + Color.decode(generateColor(colour)).toString().substring(14) + " " + type.getId() + " " + manufacture.getId());
+    }
+
+    private static String generateColor(int r) {
+        StringBuilder color = new StringBuilder(Integer.toHexString(r));
+        while (color.length() < 6) {
+            color.append("0");
+        }
+
+        return color.append("#").reverse().toString();
+
+    }
+
     public List<Composition> getComposition() {
         return composition;
     }
 
     public void setComposition(List<Composition> composition) {
         this.composition = composition;
+    }
+
+    public List<Storage> getStorage() {
+        return storage;
+    }
+
+    public void setStorage(List<Storage> storage) {
+        this.storage = storage;
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DAO<Tentity, Tkey> {
    void save(Collection<Tentity> entity);
-
+   void save(Tentity entity);
    Tentity read(Tkey id);
 
    Collection<Tentity> readAll();

@@ -11,6 +11,7 @@ public class Storage {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "socks")
     private Socks socks;
 
     @Column(name = "added")
@@ -60,5 +61,9 @@ public class Storage {
 
     public void setUsage(Integer usage) {
         this.usage = usage;
+    }
+
+    public String toString(){
+        return String.format(id + " " + socks.getId() + " " + added + " " + retired + " " + usage);
     }
 }
